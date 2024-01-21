@@ -1,0 +1,46 @@
+[
+    {
+        "caseId": 1,
+        "case_name": "Client Information",
+        "added_on": "25.03.2023",
+        "client": "Johanna",
+        "UCI": "HCA",
+        "JN": "5",
+        "year": "1998",
+        "files": ["Client Information.pdf", "Witness Statement.pdf", "Employment Contract.pdf", "Termination Letter.pdf"],
+        "summary": "Company involving the return of the said company property."
+    },
+    {
+        "caseId": 2,
+        "case_name": "Case Note",
+        "added_on": "25.03.2023",
+        "client": "Johanna",
+        "UCI": "HCA",
+        "JN": "5",
+        "year": "1998",
+        "files": ["Strategic Discussion.pdf", "Legal Research.pdf", "Final Case Strategy.pdf"],
+        "summary": "This is the summary of this case"
+    },
+    {
+        "caseId": 3,
+        "case_name": "Court documentation",
+        "added_on": "25.03.2023",
+        "client": "Johanna",
+        "UCI": "HCA",
+        "JN": "5",
+        "year": "1998",
+        "files": ["Lawsuit.pdf", "Court_Decision.pdf"],
+        "summary": "This is the summary of this case"
+    },
+    {
+        "caseId": 4,
+        "case_name": "Correspondence",
+        "added_on": "25.03.2023",
+        "client": "Johanna",
+        "UCI": "HCA",
+        "JN": "5",
+        "year": "1998",
+        "files": ["Correspondence_Mail_with_Client.pdf", "Correspondence_Mail_from_Client.pdf"],
+        "summary": "This is the summary of this case"
+    }
+]
