@@ -10,8 +10,8 @@ def add_logo():
             [data-testid="stSidebarNav"] {
                 background-image: url(https://i.imgur.com/At86a7L.png);
                 background-repeat: no-repeat;
-                background-size:45%;
-                background-position: 20px 20px;
+                background-size:30%;
+                background-position: 100px 20px;
             }
             .css-ng1t4o {{width: 10rem;}}
         </style>
@@ -75,14 +75,15 @@ def app() -> None:
         layout="wide",
         menu_items={"Get help": None, "Report a bug": None},
     )
-    st.sidebar.header("Last Cases")
-    st.sidebar.text("City Senior Court")
-    st.sidebar.text("Aggrevated assult charges")
-    st.sidebar.text("Surveilance footage")
-    st.sidebar.text("Pretrial hearings")
-    st.sidebar.header("Liked cases")
-    st.sidebar.text("Surveilance footage")
-    st.sidebar.text("Pretrial hearings")
+    st.sidebar.header("📖 Last Cases")
+    st.sidebar.text("- City Senior Court")
+    st.sidebar.text("- Aggrevated assult charges")
+    st.sidebar.text("- Surveilance footage")
+    st.sidebar.text("- Pretrial hearings")
+    st.sidebar.text("")
+    st.sidebar.header("❤️ Liked cases")
+    st.sidebar.text("- Surveilance footage")
+    st.sidebar.text("- Pretrial hearings")
 
     add_logo()
 

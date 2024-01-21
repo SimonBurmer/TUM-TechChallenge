@@ -37,10 +37,10 @@ def add_logo():
             [data-testid="stSidebarNav"] {
                 background-image: url(https://i.imgur.com/At86a7L.png);
                 background-repeat: no-repeat;
-                background-size: 45%;
-                background-position: 20px 20px;
+                background-size:30%;
+                background-position: 100px 20px;
             }
-             .css-ng1t4o {{width: 10rem;}}
+            .css-ng1t4o {{width: 10rem;}}
         </style>
         """,
         unsafe_allow_html=True,
@@ -91,15 +91,15 @@ def on_view_file(filename):
 def retrieval_form_container() -> None:
     form = st.form(key="retrieval_query")
     rag_query = form.text_area(
-        "Case Retrieval Query", value="Please describe the cases you are interested in here.", height=250,
+        "Case Retrieval Query", value="Please describe the cases you are interested in here.", height=200,
     )
 
-    form.selectbox('Select a range of the time of files.', ("Today", "Yesterday", "Last 7 days", "last 30 days"))
+    form.selectbox('Select a range of the time of files.', ("All", "Yesterday", "Last 7 days", "last 30 days"))
 
+    form.text_input('Case Topic')
     form.text_input('Case Number')
-    form.text_input('Case Name')
-    form.text_input('Unique Court Identifier')
-    form.text_input('Judgement number')
+    form.text_input('Court Number')
+    form.text_input('Judgement Number')
 
     submitted = form.form_submit_button("Search")
 
@@ -124,13 +124,16 @@ def history_display_container(history):
     
     entry = history[-1]
     rag_query = st.text_area(
-        "Case Retrieval Query", value=entry["query"], height=300,
+        label="Query:",
+        value=entry["query"], height=150,
     )
+        
+    st.divider()
 
     # st.subheader("Query")
     # st.write(entry["query"])
 
-    st.subheader("Retrieved Documents")
+    st.subheader("Retrieved Documents:")
 
     if "show_more" not in st.session_state:
         st.session_state["show_more"] = dict.fromkeys(range(0, len(entry["response"])), False)
@@ -140,13 +143,16 @@ def history_display_container(history):
     show_more_cases = st.session_state["show_more_cases"]
 
     cols = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
-    fields = ["Case Name", "Added On", "client", "Unique Course Identifier", "Judgement Number", "published year", "view"]
+    fields = ["Case Name", "Added On", "Client", "Court ID", "Judgement ID", "Published Year", "View"]
 
     # header
     for col, field in zip(cols, fields):
-        col.write("**" + field + "**")
-    st.markdown(f'<hr style="border: none; height: 2px; background-color: #9BA3AF;">', unsafe_allow_html=True)
-    st.write("")
+        col.markdown('''**:violet[''' + field + ''']**''')
+        #col.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{field}</p>', unsafe_allow_html=True)
+        col.code(field)
+
+    st.divider()
+
     col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
     col1.write(str("**Wrong Termination Case Documentation**"))
     col2.write(str("25.03.2023"))
@@ -161,7 +167,7 @@ def history_display_container(history):
         )
 
         st.write("**Case Summary (AI)**")
-        st.write("The central legal issue in this case is whether XYZ Corporation's termination of John Doe violated employment laws, specifically regarding employee rights and termination procedures.")
+        st.write("The central legal issue in this case is whether Example GmbH's termination of John Doe violated employment laws, specifically regarding employee rights and termination procedures.")
         
         st.write("")
         st.write("")
@@ -211,7 +217,7 @@ def history_display_container(history):
             type="primary",
         )
     st.write("")
-    st.markdown(f'<hr style="border: none; height: 2px; background-color: #9BA3AF;">', unsafe_allow_html=True)
+    st.divider()
     st.write("")
     col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
     col1.write(str("**Wrong Termination With Coperate A**"))
@@ -228,7 +234,7 @@ def history_display_container(history):
 
 
         st.write("**Case Summary (AI)**")
-        st.write("The central legal issue in this case is whether XYZ Corporation's termination of John Doe violated employment laws, specifically regarding employee rights and termination procedures.")
+        st.write("The core legal question in the Johnson v. ABC Bank case pertains to whether the bank's foreclosure process adhered to the required legal procedures outlined in mortgage contracts and state regulations.")   
         
 
         st.write("")
@@ -279,7 +285,7 @@ def history_display_container(history):
             type="primary",
         )
     st.write("")
-    st.markdown(f'<hr style="border: none; height: 2px; background-color: #9BA3AF;">', unsafe_allow_html=True)
+    st.divider()
     st.write("")
     col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
     col1.write(str("**Class Wrong Termination**"))
@@ -295,7 +301,7 @@ def history_display_container(history):
         )
 
         st.write("**Case Summary (AI)**")
-        st.write("The central legal issue in this case is whether XYZ Corporation's termination of John Doe violated employment laws, specifically regarding employee rights and termination procedures.")
+        st.write("In the Smith v. XYZ Corporation case, the central legal issue revolves around whether the company's handling of workplace harassment complaints complies with anti-discrimination laws, particularly with respect to creating a hostile work environment.")
         
         st.write("")
         st.write("")
@@ -349,8 +355,8 @@ def app() -> None:
     """Streamlit entrypoint for PDF Summarize frontend"""
     # config
     st.set_page_config(
-        page_title="📤 retrieval",
-        page_icon="📚",
+        page_title="LegalLens AI",
+        page_icon="🔍",
         layout="wide",
         menu_items={"Get help": None, "Report a bug": None},
     )
@@ -367,14 +373,15 @@ def app() -> None:
     # selected_page = st.sidebar.selectbox("Select a page", page_names_to_funcs.keys())
     # page_names_to_funcs[selected_page]()
 
-    st.sidebar.header("Last Cases")
-    st.sidebar.text("City Senior Court")
-    st.sidebar.text("Aggrevated assult charges")
-    st.sidebar.text("Surveilance footage")
-    st.sidebar.text("Pretrial hearings")
-    st.sidebar.header("Liked cases")
-    st.sidebar.text("Surveilance footage")
-    st.sidebar.text("Pretrial hearings")
+    st.sidebar.header("📖 Last Cases")
+    st.sidebar.text("- City Senior Court")
+    st.sidebar.text("- Aggrevated assult charges")
+    st.sidebar.text("- Surveilance footage")
+    st.sidebar.text("- Pretrial hearings")
+    st.sidebar.text("")
+    st.sidebar.header("❤️ Liked cases")
+    st.sidebar.text("- Surveilance footage")
+    st.sidebar.text("- Pretrial hearings")
 
     
 

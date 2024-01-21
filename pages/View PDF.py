@@ -37,8 +37,8 @@ def add_logo():
             [data-testid="stSidebarNav"] {
                 background-image: url(https://i.imgur.com/At86a7L.png);
                 background-repeat: no-repeat;
-                background-size: 45%;
-                background-position: 20px 20px;
+                background-size:30%;
+                background-position: 100px 20px;
             }
              .css-ng1t4o {{width: 10rem;}}
         </style>
@@ -66,7 +66,7 @@ def pdf():
         col1.write("*"+filename+"*")
         with open("./data/files/" + filename,"rb") as f:
                 base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = f'<p align="center"><iframe src="data:application/pdf;base64,{base64_pdf}#toolbar=0" width="100%" height="650" type="application/pdf"></iframe></p>'
+        pdf_display = f'<p align="center"><iframe src="data:application/pdf;base64,{base64_pdf}#toolbar=0" width="100%" height="1100" type="application/pdf"></iframe></p>'
         # pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width={str(ui_width)} height={str(ui_width*4/3)} type="application/pdf"></iframe>'
         col1.markdown(pdf_display, unsafe_allow_html=True)
 
@@ -89,8 +89,8 @@ def app() -> None:
     """Streamlit entrypoint for PDF Summarize frontend"""
     # config
     st.set_page_config(
-        page_title="📤 retrieval",
-        page_icon="📚",
+        page_title="LegalLens AI",
+        page_icon="🔍",
         layout="wide",
         menu_items={"Get help": None, "Report a bug": None},
     )
@@ -111,14 +111,17 @@ def app() -> None:
     # selected_page = st.sidebar.selectbox("Select a page", page_names_to_funcs.keys())
     # page_names_to_funcs[selected_page]()
 
-    st.sidebar.header("Last Cases")
-    st.sidebar.text("City Senior Court")
-    st.sidebar.text("Aggrevated assult charges")
-    st.sidebar.text("Surveilance footage")
-    st.sidebar.text("Pretrial hearings")
-    st.sidebar.header("Liked cases")
-    st.sidebar.text("Surveilance footage")
-    st.sidebar.text("Pretrial hearings")
+
+    st.sidebar.header("📖 Last Cases")
+    st.sidebar.text("- City Senior Court")
+    st.sidebar.text("- Aggrevated assult charges")
+    st.sidebar.text("- Surveilance footage")
+    st.sidebar.text("- Pretrial hearings")
+    st.sidebar.text("")
+    st.sidebar.header("❤️ Liked cases")
+    st.sidebar.text("- Surveilance footage")
+    st.sidebar.text("- Pretrial hearings")
+
 
     
 
