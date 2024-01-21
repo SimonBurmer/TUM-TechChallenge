@@ -63,20 +63,26 @@ def pdf():
     elif filename != "":
         col1, col2 = st.columns((2.5, 1.5))
 
-        col1.write("*"+filename+"*")
         with open("./data/files/" + filename,"rb") as f:
                 base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = f'<p align="center"><iframe src="data:application/pdf;base64,{base64_pdf}#toolbar=0" width="100%" height="1100" type="application/pdf"></iframe></p>'
+        pdf_display = f'<p align="center"><iframe src="data:application/pdf;base64,{base64_pdf}#toolbar=0" width="100%" height="1000" type="application/pdf"></iframe></p>'
         # pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width={str(ui_width)} height={str(ui_width*4/3)} type="application/pdf"></iframe>'
         col1.markdown(pdf_display, unsafe_allow_html=True)
 
-        col2.header("**Applied Laws AI**")
+        col2.header("**Applied Laws:**")
         col2.write("**German Civil Code (Bürgerliches Gesetzbuch - BGB)**")
-        col2.markdown("- [§611a]() Employment Contract")
+        col2.write("- [§611a]() Employment Contract")
+        col2.write("    - [§622]() Notice periods for employment contracts")
+        col2.text("")
+
         col2.write("**Works Constitution Act (Betriebsverfassungsgesetz - BetrVG)**")
         col2.markdown("- [§102]() Involvement of the Works Council in Termination Procedures")
-        col2.markdown("""---""")
-        col2.header("**Citations & References**")
+        col2.text("")
+        col2.text("")
+        col2.text("")
+
+        col2.header("**Citations & References:**")
+
         col2.markdown("- Employment at Will Doctrine, Restatement (Second) of Contracts, [§205]()")
         col2.markdown("- Smith v. XYZ Corp., 123 F.3d 456 (Court of Appeals, 2020)")
         col2.markdown("- Fair Labor Standards Act, 29 U.S.C. § 201 et seq")
@@ -118,7 +124,7 @@ def app() -> None:
     st.sidebar.text("- Surveilance footage")
     st.sidebar.text("- Pretrial hearings")
     st.sidebar.text("")
-    st.sidebar.header("❤️ Liked cases")
+    st.sidebar.header("❤️ Liked Cases")
     st.sidebar.text("- Surveilance footage")
     st.sidebar.text("- Pretrial hearings")
 

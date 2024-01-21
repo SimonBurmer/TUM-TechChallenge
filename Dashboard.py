@@ -81,7 +81,7 @@ def app() -> None:
     st.sidebar.text("- Surveilance footage")
     st.sidebar.text("- Pretrial hearings")
     st.sidebar.text("")
-    st.sidebar.header("❤️ Liked cases")
+    st.sidebar.header("❤️ Liked Cases")
     st.sidebar.text("- Surveilance footage")
     st.sidebar.text("- Pretrial hearings")
 

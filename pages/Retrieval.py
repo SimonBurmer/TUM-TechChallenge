@@ -147,7 +147,7 @@ def history_display_container(history):
 
     # header
     for col, field in zip(cols, fields):
-        col.markdown('''**:violet[''' + field + ''']**''')
+        #col.markdown('''**:violet[''' + field + ''']**''')
         #col.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{field}</p>', unsafe_allow_html=True)
         col.code(field)
 
@@ -379,7 +379,7 @@ def app() -> None:
     st.sidebar.text("- Surveilance footage")
     st.sidebar.text("- Pretrial hearings")
     st.sidebar.text("")
-    st.sidebar.header("❤️ Liked cases")
+    st.sidebar.header("❤️ Liked Cases")
     st.sidebar.text("- Surveilance footage")
     st.sidebar.text("- Pretrial hearings")
 
