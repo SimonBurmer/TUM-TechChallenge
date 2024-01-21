@@ -58,18 +58,13 @@ def retrieval():
     )
     st.markdown("""---""")
 
-    retrieval_form_container()
+    
 
     if history := st.session_state.get("history"):
         history_display_container(history)
     else:
         st.session_state["history"] = list()
-        st.write("")
-        st.write("")
-        st.write("")
-        # left_co, cent_co,last_co = st.columns((1,5,1))
-        # with cent_co:
-        st.image("./data/search.png")
+        retrieval_form_container()
 
 
 def on_more_click(show_more, idx):
@@ -96,15 +91,25 @@ def on_view_file(filename):
 def retrieval_form_container() -> None:
     form = st.form(key="retrieval_query")
     rag_query = form.text_area(
-        "Case Retrieval Query", value="Please describe the cases you are interested in here.", height=300,
+        "Case Retrieval Query", value="Please describe the cases you are interested in here.", height=250,
     )
-    
 
-    if form.form_submit_button("Search"):
+    form.selectbox('Select a range of the time of files.', ("Today", "Yesterday", "Last 7 days", "last 30 days"))
+
+    form.text_input('Case Number')
+    form.text_input('Case Name')
+    form.text_input('Unique Court Identifier')
+    form.text_input('Judgement number')
+
+    submitted = form.form_submit_button("Search")
+
+    if submitted:
         with st.status("Running"):
             with open('data.json') as f:
                 response = json.load(f)
         st.session_state["history"].append(dict(query=rag_query, response=response))
+
+    
     
 
 
@@ -116,7 +121,11 @@ def history_display_container(history):
     #     history_idx = st.slider("History", 0, max_idx, value=max_idx, label_visibility="collapsed")
     #     entry = history[history_idx]
     # else:
+    
     entry = history[-1]
+    rag_query = st.text_area(
+        "Case Retrieval Query", value=entry["query"], height=300,
+    )
 
     # st.subheader("Query")
     # st.write(entry["query"])
@@ -139,7 +148,7 @@ def history_display_container(history):
     st.markdown(f'<hr style="border: none; height: 2px; background-color: #9BA3AF;">', unsafe_allow_html=True)
     st.write("")
     col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
-    col1.write(str("Wrong Termination Case Documentation"))
+    col1.write(str("**Wrong Termination Case Documentation**"))
     col2.write(str("25.03.2023"))
     col3.write(str("Johanna"))
     col4.write(str("HCA"))
@@ -205,7 +214,7 @@ def history_display_container(history):
     st.markdown(f'<hr style="border: none; height: 2px; background-color: #9BA3AF;">', unsafe_allow_html=True)
     st.write("")
     col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
-    col1.write(str("Wrong Termination With Coperate A"))
+    col1.write(str("**Wrong Termination With Coperate A**"))
     col2.write(str("25.03.2022"))
     col3.write(str("Lin"))
     col4.write(str("HCA"))
@@ -273,7 +282,7 @@ def history_display_container(history):
     st.markdown(f'<hr style="border: none; height: 2px; background-color: #9BA3AF;">', unsafe_allow_html=True)
     st.write("")
     col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
-    col1.write(str("Class Wrong Termination"))
+    col1.write(str("**Class Wrong Termination**"))
     col2.write(str("25.03.2023"))
     col3.write(str("Simon"))
     col4.write(str("HCA"))

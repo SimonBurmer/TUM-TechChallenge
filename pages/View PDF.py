@@ -63,10 +63,10 @@ def pdf():
     elif filename != "":
         col1, col2 = st.columns((2.5, 1.5))
 
-        col1.header("*"+filename+"*")
+        col1.write("*"+filename+"*")
         with open("./data/files/" + filename,"rb") as f:
                 base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = f'<p align="center"><iframe src="data:application/pdf;base64,{base64_pdf}#toolbar=0" width="100%" height="550" type="application/pdf"></iframe></p>'
+        pdf_display = f'<p align="center"><iframe src="data:application/pdf;base64,{base64_pdf}#toolbar=0" width="100%" height="650" type="application/pdf"></iframe></p>'
         # pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width={str(ui_width)} height={str(ui_width*4/3)} type="application/pdf"></iframe>'
         col1.markdown(pdf_display, unsafe_allow_html=True)
 
