@@ -1,6 +1,6 @@
 # Importing Dependencies
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.document_loaders import PyPDFLoader, DirectoryLoader, TextLoader
+from langchain.document_loaders import DirectoryLoader, TextLoader
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 

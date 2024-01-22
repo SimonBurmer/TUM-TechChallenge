@@ -1,23 +1,5 @@
 import streamlit as st
-import pandas as pd
-import altair as alt
-
-
-def add_logo():
-    st.markdown(
-        """
-        <style>
-            [data-testid="stSidebarNav"] {
-                background-image: url(https://i.imgur.com/At86a7L.png);
-                background-repeat: no-repeat;
-                background-size:30%;
-                background-position: 100px 20px;
-            }
-            .css-ng1t4o {{width: 10rem;}}
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+from utils.utils import add_logo, sidebar_content
 
 def generate_slide(title, text, image):
     st.text("")
@@ -66,7 +48,6 @@ def colored_button_box(color, text):
     st.markdown(f'<div style="{button_style}">{text}</div>', unsafe_allow_html=True)
 
 # Main Streamlit app code
-
 def app() -> None:
     # config
     st.set_page_config(
@@ -75,15 +56,8 @@ def app() -> None:
         layout="wide",
         menu_items={"Get help": None, "Report a bug": None},
     )
-    st.sidebar.header("📖 Last Cases")
-    st.sidebar.text("- City Senior Court")
-    st.sidebar.text("- Aggrevated assult charges")
-    st.sidebar.text("- Surveilance footage")
-    st.sidebar.text("- Pretrial hearings")
-    st.sidebar.text("")
-    st.sidebar.header("❤️ Liked Cases")
-    st.sidebar.text("- Surveilance footage")
-    st.sidebar.text("- Pretrial hearings")
+    
+    sidebar_content()
 
     add_logo()
 
