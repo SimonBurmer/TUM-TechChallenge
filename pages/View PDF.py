@@ -1,49 +1,8 @@
 import streamlit as st
 import base64
-import time
-import os
 from utils.utils import add_logo, nav_page, sidebar_content
 from openai import OpenAI
 from pdfminer.high_level import extract_text
-
-
-client = OpenAI(api_key='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')
-pdf_text = extract_text("./data/cases/test_case/judgement.pdf")
-
-def summary_ai(pdf_text):
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo-16k",  
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a helpful assistant for text summarization",
-            },
-            {
-                "role": "user",
-                "content": pdf_text,
-            }
-        ],
-    )
-    return response.choices[0].message.content
-
-
-print(summary_ai(pdf_text))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def back():
