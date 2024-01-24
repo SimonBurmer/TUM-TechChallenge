@@ -48,12 +48,13 @@ pip install requirements.txt
 streamlit run Dashboard.py
 ```
 
-### Try out the AI experience
+### Try out the AI experience 🛰🤖
 
 ```
 # 1. add your OpenAI API key in the API_Key.py file
 # 2. run the app 
-# 3. Open the "AI Test Case" in the retriever or upload your own case and open it
+# 3. Open the "AI Test Case" in the retriever or upload your own case and open it to see the AI Summary 
+# 4. Open one of the documents of your uploaded case or of the "AI Test Case" to see the per file evaluations
 
 streamlit run Dashboard.py
 
