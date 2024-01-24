@@ -229,7 +229,8 @@ def history_display_container(history):
     # Dynamically display uploaded cases
     ########################################
     folder_path = "data/cases"
-    for folder_name in os.listdir(folder_path):
+    for id, folder_name in enumerate(os.listdir(folder_path)):
+        id +=2
         if folder_name == "wrongful_termination":
             continue
 
@@ -238,7 +239,7 @@ def history_display_container(history):
             st.divider()
             st.write("")
             case(
-            "**"+folder_name+"**", date.today(), "-", "-", "-", "-", "3", 3, show_more_cases, 
+            "**"+folder_name+"**", date.today(), "-", "-", "-", "-", str(id), id, show_more_cases, 
             "generating summary...",
             entry, show_more
             )

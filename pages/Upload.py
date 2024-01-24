@@ -46,16 +46,11 @@ def app() -> None:
                 with open(file_path, "wb") as f:
                     f.write(file.read())
 
-
-
-
-
     # Button in column 2
     with col2:
         st.subheader("Connect to CRM system:")
         st.write("Connect to your CRM system to automatically retrieve documents and case information. Foster better client relationships through seamless access to case histories, contact information, and tailored communication logs directly from our platform. Our integration allows for a synchronized workflow, ensuring that client data is up-to-date and aligned with case proceedings.")
         button_text2 = st.button("Connect now")
-
 
     st.write("")
     st.write("")
