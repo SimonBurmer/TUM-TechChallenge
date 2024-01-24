@@ -8,10 +8,10 @@ from openai import OpenAI
 from pdfminer.high_level import extract_text
 
 
-client = OpenAI(api_key=API_Key.OPEN_API_KEY) # key is limited to 5€ so no security issue
+client = OpenAI(api_key=API_Key.OPEN_API_KEY)
 
 def summary_ai(file_path):
-    pdf_text = extract_text(file_path) #"./data/cases/test_case/judgement.pdf"
+    pdf_text = extract_text(file_path)
 
     if len(pdf_text) > 10000:
         pdf_text = pdf_text[:10000] # limit to 10k characters for GPT-3
@@ -106,9 +106,7 @@ def case(title1, title2, title3, title4, title5, title6, key, case_id, show_more
             file = os.listdir(folder_path)[0]
             file_path = os.path.join(folder_path, file)
 
-            print(file_path)
-
-            with st.spinner('Wait for it...'):
+            with st.spinner('Creating the best summery...'):
                 try:
                     summary = summary_ai(file_path)
                 except:

@@ -1,8 +1,55 @@
 import streamlit as st
 import base64
+import API_Key
 from utils.utils import add_logo, nav_page, sidebar_content
 from openai import OpenAI
 from pdfminer.high_level import extract_text
+
+
+client = OpenAI(api_key=API_Key.OPEN_API_KEY)
+
+def laws_applied_ai(file_path):
+    pdf_text = extract_text(file_path)
+
+    if len(pdf_text) > 10000:
+        pdf_text = pdf_text[:10000] # limit to 10k characters for GPT-3
+    
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",  
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a lawyer assistant and you return bullet points of all german laws that are applied/used to the given text. Only answer with the pullet point's on other text",
+            },
+            {
+                "role": "user",
+                "content": pdf_text,
+            }
+        ],
+    )
+    return response.choices[0].message.content
+
+
+def laws_references_ai(file_path):
+    pdf_text = extract_text(file_path)
+
+    if len(pdf_text) > 10000:
+        pdf_text = pdf_text[:10000] # limit to 10k characters for GPT-3
+    
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",  
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a lawyer assistant and you return bullet points of all german Citations & References that are applied/used to the given text. Only answer with the pullet point's on other text",
+            },
+            {
+                "role": "user",
+                "content": pdf_text,
+            }
+        ],
+    )
+    return response.choices[0].message.content
 
 
 def back():
@@ -35,15 +82,12 @@ def app() -> None:
     elif filename != "":
 
         col1, col2 = st.columns((2.5, 1.5))
-        
-        print(filename)
 
         # display PDF
         with open(filename,"rb") as f:
                 base64_pdf = base64.b64encode(f.read()).decode('utf-8')
         pdf_display = f'<p align="center"><iframe src="data:application/pdf;base64,{base64_pdf}#toolbar=0" width="100%" height="1000" type="application/pdf"></iframe></p>'
         col1.markdown(pdf_display, unsafe_allow_html=True)
-
 
         ##############################
         # Mock case info for pitch
@@ -73,16 +117,23 @@ def app() -> None:
         ##############################
         else:
             col2.header("**Applied Laws:**")
-            col2.write("**Wait for it...**")
-            col2.text("")
-            col2.text("")
-            col2.text("")
+            
+            with col2:
+                with st.spinner('Finding all applied laws...'):
+                    try:
+                        laws_applied = laws_applied_ai(filename)
+                    except:
+                        laws_applied = "OpenAI API is not Working!! Insert your api key in API_Key.py!!"
+            col2.text(laws_applied)
 
             col2.header("**Citations & References:**")
-            col2.write("**Wait for it...**")
-            col2.text("")
-            col2.text("")
-            col2.text("")
+            with col2:
+                with st.spinner('Finding all used citations & references...'):
+                    try:
+                        references = laws_applied_ai(filename)
+                    except:
+                        references = "OpenAI API is not Working!! Insert your api key in API_Key.py!!"
+            col2.text(references)
 
     sidebar_content()
 
