@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from utils.utils import add_logo, sidebar_content
 
@@ -29,7 +30,24 @@ def app() -> None:
     with col1:
         st.subheader("Upload new cases:")
         st.write("Securely upload your legal documents here to ensure they are organized and easily retrievable. Supported formats include .pdf, .docx, and .txt files.")
-        button_text1 = st.button("Upload documents")
+        
+        uploaded_files = st.file_uploader("Upload Case Files", accept_multiple_files=True)
+        text_value = st.text_input("Case Name")
+
+        create_case_button_enabled = uploaded_files is not None and text_value != ""
+
+        if st.button("Create Case", key="create_case_button", disabled=not create_case_button_enabled):
+            # Perform action when the "Create Case" button is clicked
+            # Save uploaded files in a new folder
+            folder_path = os.path.join("data", "cases", text_value)
+            os.makedirs(folder_path, exist_ok=True)
+            for file in uploaded_files:
+                file_path = os.path.join(folder_path, file.name)
+                with open(file_path, "wb") as f:
+                    f.write(file.read())
+
+
+
 
 
     # Button in column 2
@@ -43,9 +61,15 @@ def app() -> None:
     st.write("")
     st.write("")
 
+    st.divider()
+
+    st.write("")
+    st.write("")
+    st.write("")
+    
     html_code = """
         <div style="display: flex; width: 75%; align-items: center; text-align: center;">
-            <img src="https://i.imgur.com/jBZdklp.png" alt="Mobile App" style="width: 30%; margin-right: 20px;">
+            <img src="https://i.imgur.com/jBZdklp.png" alt="Mobile App" style="width: 20%; margin-right: 20px;">
             <div>
                 <h1>Download</h1>
                 <h2>LegalLens AI mobile 🚀</h2>

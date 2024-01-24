@@ -1,19 +1,21 @@
 import streamlit as st
 import json
 from utils.utils import add_logo, nav_page, sidebar_content
+import os
+from datetime import date
 
-def on_more_click(show_more, id, idx):
-    show_more[id][idx] = True
+def on_more_click(show_more, id, folder_id):
+    show_more[id][folder_id] = True
 
-def on_more_case_click(show_more_cases, idx):
-    show_more_cases[idx] = True
+def on_more_case_click(show_more_cases, folder_id):
+    show_more_cases[folder_id] = True
 
-def on_less_case_click(show_more_cases, idx):
-    show_more_cases[idx] = False
+def on_less_case_click(show_more_cases, folder_id):
+    show_more_cases[folder_id] = False
 
 
-def on_less_click(show_more, id, idx):
-    show_more[id][idx] = False
+def on_less_click(show_more, id, folder_id):
+    show_more[id][folder_id] = False
 
 def on_view_file(filename):
     f = open("filename.txt", "w")
@@ -40,32 +42,55 @@ def case(title1, title2, title3, title4, title5, title6, key, case_id, show_more
         st.write("")
         st.write("")
         col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
-        col1.write(str("**Folders**"))
-        
-        for idx, row in enumerate(entry["response"]):
-            col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
-            col1.write("📁    " + str(row["case_name"]))
 
-            placeholder = col2.empty()
-            if show_more[case_id][idx]:
-                placeholder.button(
-                    "Close", key=key + str(idx) + "_", on_click=on_less_click, args=[show_more, case_id, idx]
-                )
-               
-                for file_id, file in enumerate(row["files"]):
-                    col1, col2, col3 = st.columns((4, 2, 7))
-                    col1.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📄    " + f"{file}")
-                    col2.button(
-                    "view", key=key + str(idx) + "view" + file + str(file_id), on_click=on_view_file, args=[file]
-                    ) 
-            else:
-                placeholder.button(
-                    "Show Files",
-                    key= key + str(idx),
-                    on_click=on_more_click,
-                    args=[show_more, case_id, idx],
-                    type="primary",
-                )
+
+        # For mock cases
+        if case_id < 3:
+            col1.write(str("**Folders**"))
+            
+            for folder_id, row in enumerate(entry["response"]):
+                col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
+                col1.write("📁    " + str(row["case_name"]))
+                placeholder = col2.empty()
+                if show_more[case_id][folder_id]:
+                    placeholder.button(
+                        "Close", key=key + str(folder_id) + "_", on_click=on_less_click, args=[show_more, case_id, folder_id]
+                    )
+                
+                    for file_id, file in enumerate(row["files"]):
+                        col1, col2, col3 = st.columns((4, 2, 7))
+                        col1.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📄    " + f"{file}")
+                        col2.button(
+                        "view", key=key + str(folder_id) + "view" + file + str(file_id), on_click=on_view_file, args=["data/cases/wrongful_termination/" + file]
+                        ) 
+                else:
+                    placeholder.button(
+                        "Show Files",
+                        key= key + str(folder_id),
+                        on_click=on_more_click,
+                        args=[show_more, case_id, folder_id],
+                        type="primary",
+                    )
+            
+        # For dynamic cases
+        else:
+            col1.write(str("**Files**"))
+            
+            folder_path = "data/cases/" + title1[2:-2]
+            for file_id, file in enumerate(os.listdir(folder_path)):
+                file_path = os.path.join(folder_path, file)
+                file_name = os.path.basename(file_path)
+
+            #for file_id, file_name in enumerate(os.listdir("data/cases/" + title1[2:-2])):
+                
+                col1, col2, col3 = st.columns((4, 2, 7))
+                col1.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📄 &nbsp;" + f"{file_name}")
+                col2.button(
+                "view", key=key + str(1) + "view" + file_name + str(file_id), on_click=on_view_file, args=[file_path]
+                ) 
+            
+            case_id = 0
+            
     else:
         placeholder_case.button(
             "Show Folders",
@@ -110,9 +135,9 @@ def history_display_container(history):
     st.subheader("Retrieved Documents:")
 
     if "show_more" not in st.session_state:
-        st.session_state["show_more"] = [[False] * 4 for _ in range(3)]
+        st.session_state["show_more"] = [[False] * 4 for _ in range(300)]
     if "show_more_cases" not in st.session_state: 
-        st.session_state["show_more_cases"] = dict.fromkeys(range(0, 3), False)
+        st.session_state["show_more_cases"] = dict.fromkeys(range(0, 300), False)
     show_more = st.session_state["show_more"]
     show_more_cases = st.session_state["show_more_cases"]
 
@@ -125,9 +150,12 @@ def history_display_container(history):
 
     st.divider()
 
-    # Mock data
+
+    ########################################
+    # Show mock cases for final pitch:
+    ########################################
     case(
-            "**Wrong Termination Case Documentation**", "25.03.2023", "John", "HCA", "5", "1998", "0", 0, show_more_cases, 
+            "**Wrong Termination Case Documentation**", "25-03-2023", "John", "HCA", "5", "1998", "0", 0, show_more_cases, 
             "The central legal issue in this case is whether Example GmbH's termination of John Doe violated employment laws, specifically regarding employee rights and termination procedures.",
             entry, show_more
          )
@@ -137,7 +165,7 @@ def history_display_container(history):
     st.write("")
 
     case(
-            "**Wrong Termination With Coperate A**", "25.03.2022", "Lin", "HCA", "4", "2000", "1", 1, show_more_cases, 
+            "**Wrong Termination With Coperate A**", "25-03-2022", "Lin", "HCA", "4", "2000", "1", 1, show_more_cases, 
             "The core legal question in the Johnson v. ABC Bank case pertains to whether the bank's foreclosure process adhered to the required legal procedures outlined in mortgage contracts and state regulations.",
             entry, show_more
          )
@@ -147,10 +175,30 @@ def history_display_container(history):
     st.write("")
 
     case(
-            "**Class Wrong Termination**", "18.02.2022", "Simon", "HCA", "6", "2001", "2", 2, show_more_cases, 
+            "**Class Wrong Termination**", "18-02-2022", "Simon", "HCA", "6", "2001", "2", 2, show_more_cases, 
             "In the Smith v. XYZ Corporation case, the central legal issue revolves around whether the company's handling of workplace harassment complaints complies with anti-discrimination laws, particularly with respect to creating a hostile work environment.",
             entry, show_more
          )
+    
+
+    ########################################
+    # Dynamically display uploaded cases
+    ########################################
+    folder_path = "data/cases"
+    for folder_name in os.listdir(folder_path):
+        if folder_name == "wrongful_termination":
+            continue
+
+        if os.path.isdir(os.path.join(folder_path, folder_name)):
+            st.write("")
+            st.divider()
+            st.write("")
+
+            case(
+            "**"+folder_name+"**", date.today(), "-", "-", "-", "-", "3", 3, show_more_cases, 
+            "generating summary...",
+            entry, show_more
+            )
 
 
 def app() -> None:
