@@ -1,1 +1,1 @@
-data/cases/test_case/judgment.pdf
+data/cases/wrongful_termination/Strategic Discussion.pdf

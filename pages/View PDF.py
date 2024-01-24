@@ -1,7 +1,50 @@
 import streamlit as st
 import base64
 import time
+import os
 from utils.utils import add_logo, nav_page, sidebar_content
+from openai import OpenAI
+from pdfminer.high_level import extract_text
+
+
+client = OpenAI(api_key='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')
+pdf_text = extract_text("./data/cases/test_case/judgement.pdf")
+
+def summary_ai(pdf_text):
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo-16k",  
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a helpful assistant for text summarization",
+            },
+            {
+                "role": "user",
+                "content": pdf_text,
+            }
+        ],
+    )
+    return response.choices[0].message.content
+
+
+print(summary_ai(pdf_text))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def back():
     nav_page("Retrieval")
@@ -35,6 +78,9 @@ def app() -> None:
     if filename == "":
         st.header("Please type in your query and retrieve documents in retrieval section")
     elif filename != "":
+
+
+
         col1, col2 = st.columns((2.5, 1.5))
         
         print(filename)
@@ -70,21 +116,36 @@ def app() -> None:
             col2.markdown("- Employment at Will Doctrine, Restatement (Second) of Contracts, [§205]()")
             col2.markdown("- Smith v. XYZ Corp., 123 F.3d 456 (Court of Appeals, 2020)")
             col2.markdown("- Fair Labor Standards Act, 29 U.S.C. § 201 et seq")
+            
+            # Text input
+            user_input = st.text_input("Enter your query:")
+
+            # Button to trigger the API call
+            if st.button("Get Response"):
+                if user_input:
+                    # Call the OpenAI API and display the response
+                    response = get_openai_response(user_input)
+                    st.text_area("Response:", value=response, height=300)
+                else:
+                    st.error("Please enter a query.")
+            
+
 
         ##############################
         # Dynamic case info
         ##############################
-        col2.header("**Applied Laws:**")
-        col2.write("**Wait for it...**")
-        col2.text("")
-        col2.text("")
-        col2.text("")
+        else:
+            col2.header("**Applied Laws:**")
+            col2.write("**Wait for it...**")
+            col2.text("")
+            col2.text("")
+            col2.text("")
 
-        col2.header("**Citations & References:**")
-        col2.write("**Wait for it...**")
-        col2.text("")
-        col2.text("")
-        col2.text("")
+            col2.header("**Citations & References:**")
+            col2.write("**Wait for it...**")
+            col2.text("")
+            col2.text("")
+            col2.text("")
 
     sidebar_content()
 

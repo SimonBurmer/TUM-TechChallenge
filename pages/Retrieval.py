@@ -3,6 +3,31 @@ import json
 from utils.utils import add_logo, nav_page, sidebar_content
 import os
 from datetime import date
+from openai import OpenAI
+from pdfminer.high_level import extract_text
+
+client = OpenAI(api_key='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') # key is limited to 5€ so no security issue
+
+def summary_ai(file_path):
+    pdf_text = extract_text(file_path) #"./data/cases/test_case/judgement.pdf"
+
+    if len(pdf_text) > 10000:
+        pdf_text = pdf_text[:10000] # limit to 10k characters for GPT-3
+    
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",  
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a helpful assistant for text summarization, your summarizes are not longer than 4 Sentences.",
+            },
+            {
+                "role": "user",
+                "content": pdf_text,
+            }
+        ],
+    )
+    return response.choices[0].message.content
 
 def on_more_click(show_more, id, folder_id):
     show_more[id][folder_id] = True
@@ -37,15 +62,15 @@ def case(title1, title2, title3, title4, title5, title6, key, case_id, show_more
         placeholder_case.button(
             "Close Folders", key=key + "__", on_click=on_less_case_click, args=[show_more_cases, case_id]
         )
-        st.write("**Case Summary (AI)**")
-        st.write(summary)
-        st.write("")
-        st.write("")
-        col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
 
 
         # For mock cases
         if case_id < 3:
+            st.write("**Case Summary (AI)**")
+            st.write(summary)
+            st.write("")
+            st.write("")
+            col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
             col1.write(str("**Folders**"))
             
             for folder_id, row in enumerate(entry["response"]):
@@ -74,9 +99,26 @@ def case(title1, title2, title3, title4, title5, title6, key, case_id, show_more
             
         # For dynamic cases
         else:
+            st.write("**Case Summary (AI)**")
+            folder_path = "data/cases/" + title1[2:-2]
+            file = os.listdir(folder_path)[0]
+            file_path = os.path.join(folder_path, file)
+
+            print(file_path)
+
+            with st.spinner('Wait for it...'):
+                summary = summary_ai(file_path)
+            st.write(summary)
+
+            st.write("")
+            st.write("")
+            col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
+            col1.write(str("**Folders**"))
+
+
             col1.write(str("**Files**"))
             
-            folder_path = "data/cases/" + title1[2:-2]
+
             for file_id, file in enumerate(os.listdir(folder_path)):
                 file_path = os.path.join(folder_path, file)
                 file_name = os.path.basename(file_path)
@@ -193,7 +235,6 @@ def history_display_container(history):
             st.write("")
             st.divider()
             st.write("")
-
             case(
             "**"+folder_name+"**", date.today(), "-", "-", "-", "-", "3", 3, show_more_cases, 
             "generating summary...",
