@@ -3,6 +3,7 @@
 <img src="data/images/logo_header.png" alt="LegalLensAI-Logo" width="100%"/>
 
 ---
+
 ---
 
 ## Links to our LegalLens AI's Github Repo
@@ -15,17 +16,17 @@
 - Leveraging a fine-tuned legal language model, our solution excels in accuracy and speed, enabling swift retrieval and deep matching within extensive legal data entries using vector database search engine.
 - Efficiently presenting key legal information, our AI-generated summaries offer lawyers insights into relevant documents and their significance in searches.
 
-## See our product in action: 
+## See our product in action:
 
-### Landing page: 
+### Landing page:
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://dashboardpy-ch84rdhq7jjflzmepsla98.streamlit.app/)
 
-### Upload documents: 
+### Upload documents:
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://dashboardpy-ch84rdhq7jjflzmepsla98.streamlit.app/Upload)
 
-### Retrieval: 
+### Retrieval:
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://dashboardpy-ch84rdhq7jjflzmepsla98.streamlit.app/Retrieval)
 
@@ -39,12 +40,28 @@ conda create -n LegalLensAI python==3.9
 conda activate LegalLensAI
 pip install requirements.txt
 ```
+
 ### Basics
+
 ```
 #run the entire app
 streamlit run Dashboard.py
 ```
+
+### Try out the AI experience
+
+```
+# 1. add your OpenAI API key in the API_Key.py file
+# 2. run the app 
+# 3. Open the "AI Test Case" in the retriever or upload your own case and open it
+
+streamlit run Dashboard.py
+
+# troubleshooting: manually install "pip install openai==1.9.0" & "pip install pdfminer.six==20231228"
+```
+
 ### Retrieval AI pipeline
+
 ```
 #upload all documents and create embeddings in vector database
 cd retriever
@@ -56,7 +73,7 @@ streamlit run app.py
 
 ### Juicy Demo
 
-Here's an image of the beginning of the app, landing page view:  
+Here's an image of the beginning of the app, landing page view:
 
 <img src="data/images/landing.png" alt="Landing" width="70%"/>
 
@@ -75,9 +92,10 @@ Here is an image of the uploading the files
 <img src="data/images/upload.png" alt="Upload" width="70%"/>
 
 ## Technical Details
-We built a Webapp on the [Streamlit](https://streamlit.io/) Framework. It provides a simple layout which we only had to adapt a little to our preferences. 
+
+We built a Webapp on the [Streamlit](https://streamlit.io/) Framework. It provides a simple layout which we only had to adapt a little to our preferences.
 Streamlit is really popular for additional adding of ML-Models/Ai integration for the future and convenient for demo purpose.
-With regard to scaling in the future, other more mature front end technology, like Angular, can also be considered to apply detail UI features. 
+With regard to scaling in the future, other more mature front end technology, like Angular, can also be considered to apply detail UI features.
 
 For the main app starting from `./Dashboard.py`, we have build several pages with UI/UX functions that offer the full legal process of using our product: upload, retrieval of documents, and display of a relevant document. We have mocked the displayed documents, AI result, and relevant information due to a lack of real legal files and anonymity of real legal data. However, all the necessary functions and AI pipeline have been set up in `retriever` once there are real legal files provided.
 
@@ -85,7 +103,7 @@ In `./retriever` module, we have provided a group of AI functions to embed docum
 
 For a simple overlook of the techstack:
 
-![Tech Stack](data/techstack.png)
+![Tech Stack](data/images/techstack.png)
 
 ### Data uploading & processing (Langchain, Streamlit, mobile solutions)
 
@@ -103,7 +121,8 @@ For a simple overlook of the techstack:
 - Relevant legal research documents and legal datapoints visualized and returned.
 - Summaries and insights from matched legal cases.
 
-### Folder Structure: 
+### Folder Structure:
+
 - The root of the repo contains the entry point for main dashboard.
 - `data` folder stores the media files that is used, including images and mock legal files.
 - `retriever` folder stores the source code for the retrieval pipeline using langchain and streamlit, including the utilities functions to retrieve and a simple demo of retrieval funciton.
