@@ -17,13 +17,9 @@ def app() -> None:
         layout="wide",
         menu_items={"Get help": None, "Report a bug": None},
     )
-    
     st.session_state["filename"] = ""
-
     st.button("Back to retrieval", on_click=back)
-
     add_logo()
-
     filename = ""
 
     # retrieve last opened file
@@ -38,8 +34,6 @@ def app() -> None:
         st.header("Please type in your query and retrieve documents in retrieval section")
     elif filename != "":
 
-
-
         col1, col2 = st.columns((2.5, 1.5))
         
         print(filename)
@@ -51,11 +45,8 @@ def app() -> None:
         col1.markdown(pdf_display, unsafe_allow_html=True)
 
 
-
-        # display case info
-
         ##############################
-        # Mock case into for pitch
+        # Mock case info for pitch
         ##############################
         if "wrongful_termination" in filename:        
             col2.header("**Applied Laws:**")
@@ -76,20 +67,7 @@ def app() -> None:
             col2.markdown("- Smith v. XYZ Corp., 123 F.3d 456 (Court of Appeals, 2020)")
             col2.markdown("- Fair Labor Standards Act, 29 U.S.C. § 201 et seq")
             
-            # Text input
-            user_input = st.text_input("Enter your query:")
-
-            # Button to trigger the API call
-            if st.button("Get Response"):
-                if user_input:
-                    # Call the OpenAI API and display the response
-                    response = get_openai_response(user_input)
-                    st.text_area("Response:", value=response, height=300)
-                else:
-                    st.error("Please enter a query.")
             
-
-
         ##############################
         # Dynamic case info
         ##############################

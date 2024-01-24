@@ -1,6 +1,6 @@
 # 👋 LegalsLens AI
 
-<img src="data/logo_header.png" alt="LegalLensAI-Logo" width="100%"/>
+<img src="data/images/logo_header.png" alt="LegalLensAI-Logo" width="100%"/>
 
 ---
 ---
@@ -58,21 +58,21 @@ streamlit run app.py
 
 Here's an image of the beginning of the app, landing page view:  
 
-<img src="data/landing.png" alt="Landing" width="70%"/>
+<img src="data/images/landing.png" alt="Landing" width="70%"/>
 
 Here is an image of the retrieving documents with query
 
-<img src="data/retrieval.png" alt="Retrieval" width="70%"/>
-<img src="data/result.png" alt="Result" width="70%"/>
-<img src="data/result2.png" alt="Result" width="70%"/>
+<img src="data/images/retrieval.png" alt="Retrieval" width="70%"/>
+<img src="data/images/result.png" alt="Result" width="70%"/>
+<img src="data/images/result2.png" alt="Result" width="70%"/>
 
 Here is an image of the detail view of file
 
-<img src="data/detail.png" alt="Detail" width="70%"/>
+<img src="data/images/detail.png" alt="Detail" width="70%"/>
 
 Here is an image of the uploading the files
 
-<img src="data/upload.png" alt="Upload" width="70%"/>
+<img src="data/images/upload.png" alt="Upload" width="70%"/>
 
 ## Technical Details
 We built a Webapp on the [Streamlit](https://streamlit.io/) Framework. It provides a simple layout which we only had to adapt a little to our preferences. 

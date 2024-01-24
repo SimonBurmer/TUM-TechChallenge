@@ -2,11 +2,13 @@ import streamlit as st
 import json
 from utils.utils import add_logo, nav_page, sidebar_content
 import os
+import API_Key
 from datetime import date
 from openai import OpenAI
 from pdfminer.high_level import extract_text
 
-client = OpenAI(api_key='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') # key is limited to 5€ so no security issue
+
+client = OpenAI(api_key=API_Key.OPEN_API_KEY) # key is limited to 5€ so no security issue
 
 def summary_ai(file_path):
     pdf_text = extract_text(file_path) #"./data/cases/test_case/judgement.pdf"
@@ -107,7 +109,11 @@ def case(title1, title2, title3, title4, title5, title6, key, case_id, show_more
             print(file_path)
 
             with st.spinner('Wait for it...'):
-                summary = summary_ai(file_path)
+                try:
+                    summary = summary_ai(file_path)
+                except:
+                    summary = "OpenAI API is not Working!! insert your api key in API_Key.py!!"
+
             st.write(summary)
 
             st.write("")
@@ -115,10 +121,8 @@ def case(title1, title2, title3, title4, title5, title6, key, case_id, show_more
             col1, col2, col3, col4, col5, col6, col7 = st.columns((4, 1.5, 1.5, 1, 1.5, 1.5, 2))
             col1.write(str("**Folders**"))
 
-
             col1.write(str("**Files**"))
             
-
             for file_id, file in enumerate(os.listdir(folder_path)):
                 file_path = os.path.join(folder_path, file)
                 file_name = os.path.basename(file_path)
