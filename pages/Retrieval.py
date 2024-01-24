@@ -21,7 +21,7 @@ def summary_ai(file_path):
         messages=[
             {
                 "role": "system",
-                "content": "You are a helpful assistant for text summarization, your summarizes are not longer than 4 Sentences.",
+                "content": "You are a helpful assistant for text summarization, your summarizes are not longer than 4 Sentences. Always answer in English.",
             },
             {
                 "role": "user",

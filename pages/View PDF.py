@@ -19,7 +19,7 @@ def laws_applied_ai(file_path):
         messages=[
             {
                 "role": "system",
-                "content": "You are a lawyer assistant and you return bullet points of all german laws that are applied/used to the given text. Only answer with the pullet point's on other text",
+                "content": "You are a lawyer assistant and you return bullet points of all german laws that are applied/used to the given text. Only answer with the pullet point's on other text.  Always answer in English.",
             },
             {
                 "role": "user",
@@ -41,7 +41,7 @@ def laws_references_ai(file_path):
         messages=[
             {
                 "role": "system",
-                "content": "You are a lawyer assistant and you return bullet points of all german Citations & References that are applied/used to the given text. Only answer with the pullet point's on other text",
+                "content": "You are a lawyer assistant and you return bullet points of all german Citations & References that are applied/used to the given text. Only answer with the pullet point's on other text.  Always answer in English.",
             },
             {
                 "role": "user",
