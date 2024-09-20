@@ -76,21 +76,21 @@ streamlit run app.py
 
 Here's an image of the beginning of the app, landing page view:
 
-<img src="data/images/landing.png" alt="Landing" width="70%"/>
+<img src="data/images/landing.png" alt="Landing" width="100%"/>
 
 Here is an image of the retrieving documents with query
 
-<img src="data/images/retrieval.png" alt="Retrieval" width="70%"/>
-<img src="data/images/result.png" alt="Result" width="70%"/>
-<img src="data/images/result2.png" alt="Result" width="70%"/>
+<img src="data/images/retrieval.png" alt="Retrieval" width="100%"/>
+<img src="data/images/result.png" alt="Result" width="100%"/>
+<img src="data/images/result2.png" alt="Result" width="100%"/>
 
 Here is an image of the detail view of file
 
-<img src="data/images/detail.png" alt="Detail" width="70%"/>
+<img src="data/images/detail.png" alt="Detail" width="100%"/>
 
 Here is an image of the uploading the files
 
-<img src="data/images/upload.png" alt="Upload" width="70%"/>
+<img src="data/images/upload.png" alt="Upload" width="100%"/>
 
 ## Technical Details
 
